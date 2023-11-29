@@ -4,7 +4,7 @@ install-tools:
 		echo "Try installing go..."; \
 		exit 1; \
 	fi
-	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.49.0
+	go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.0
 	go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@v4.15.1
 	go install github.com/golang/mock/mockgen@v1.6.0
 	go install github.com/axw/gocov/gocov@latest

@@ -1,6 +1,6 @@
 run:
   concurrency: 8
-  timeout: 120s
+  timeout: 240s
   tests: true
 linters: # Descriptions: https://github.com/golangci/awesome-go-linters
   enable-all: true
@@ -17,6 +17,8 @@ linters: # Descriptions: https://github.com/golangci/awesome-go-linters
     - nlreturn
     - maintidx
     - lll
+    - goerr113
+    - depguard
     - paralleltest  # recomended linter in the future
     - exhaustivestruct
     - gomnd
