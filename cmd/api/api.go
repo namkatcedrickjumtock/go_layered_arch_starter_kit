@@ -4,12 +4,14 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/Iknite-space/itamba-api/internal/api"
 	"github.com/Iknite-space/itamba-api/internal/persistence"
 	"github.com/Iknite-space/itamba-api/internal/services/echo"
 	"github.com/ardanlabs/conf/v3"
+	"github.com/joho/godotenv"
 )
 
 func main() {
@@ -33,6 +35,15 @@ func run() error {
 			DisableTLS bool   `conf:"env:DB_DISABLE_TLS,default:false"`
 		}
 	}
+
+			// loadDevEnv loads .env file if present
+			if _, err := os.Stat(".env"); err == nil {
+				err := godotenv.Load()
+				if err != nil {
+					log.Fatal("Error loading .env file")
+				}
+			}
+			
 
 	help, err := conf.Parse("", &cfg)
 	if err != nil {
