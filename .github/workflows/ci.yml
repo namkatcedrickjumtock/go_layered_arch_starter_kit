@@ -10,22 +10,39 @@ jobs:
   build-and-test:
     runs-on: ubuntu-20.04
     steps:
+      
       - name: Install Go
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v4
         with:
-          go-version: 1.18
-
+          go-version: 1.21
+      - name: go version      
+        run: go version
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install Tools
         run:  make install-tools
-
-      - name: Build
-        run:  make build
-
       - name: Run lint
         run:  make lint
       - name: Run tests
-        run:  make test
-
+        run:  make test && make coverage
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage.cobertura.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: true
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '0'
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          path: code-coverage-results.md
+      - name: Build
+        run:  make build

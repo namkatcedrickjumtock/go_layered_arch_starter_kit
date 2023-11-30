@@ -1,15 +1,37 @@
-FROM ubuntu:20.04
+# syntax=docker/dockerfile:1
+FROM golang:1.20-alpine AS builder
 
-# Set destination for COPY
-WORKDIR /app/bin
+WORKDIR /src/
 
-# specif location to copy go binary
-COPY ./bin/api ./
+COPY go.mod go.sum ./
+
+RUN go mod download -x
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o bin/api ./cmd/api/api.go
+
+
+
+FROM alpine:latest  
+
+RUN apk --no-cache  add ca-certificates
+
+WORKDIR /root/
+
+# copy over binary build from the first builder stage above into ./
+COPY --from=builder /src/bin/api ./
+
+# migration files
 COPY ./db ./
+
 ENV DB_MIGRATIONS_PATH=./db/migrations
 
-ENV LISTEN_PORT=9081
+ENV LISTEN_PORT=9080
+
 EXPOSE  9980
 
 # Run
-CMD ["/app/bin/api" ]
+CMD ["./api"]
+
+# ENTRYPOINT [ "/api" ]
