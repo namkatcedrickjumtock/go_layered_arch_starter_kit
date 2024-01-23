@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+*.DS_Store
 
 # Test binary, built with `go test -c`
 *.test
@@ -16,8 +17,11 @@
 
 # uncomment to include
 Dockerfile.multistage
-
+temp_home
 Document.md
 
 # Config file that could hold sensitive data
 .env
+.history/
+.trunk/
+volume/

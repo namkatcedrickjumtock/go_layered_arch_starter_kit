@@ -1,9 +1,17 @@
 # syntax=docker/dockerfile:1
-FROM golang:1.20-alpine AS builder
+FROM golang:1.21-bookworm AS builder
 
 WORKDIR /src/
 
 COPY go.mod go.sum ./
+
+ENV GOPRIVATE=github.com/Iknite-Space
+ENV HOME=/root
+RUN apt-get update && apt-get install -y ca-certificates git-core ssh
+RUN git config --global url."git@github.com:Iknite-Space/".insteadOf "https://github.com/Iknite-Space/"
+ADD ./temp_home/.ssh/id_rsa /root/.ssh/id_rsa
+RUN chmod 700 /root/.ssh/id_rsa
+RUN echo "\n\nHost github.com\n\tStrictHostKeyChecking no\n" >> /root/.ssh/config
 
 RUN go mod download -x
 
@@ -13,14 +21,15 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o bin/api ./cmd/api/api.go
 
 
 
-FROM alpine:latest  
+FROM golang:1.21-bookworm
 
-RUN apk --no-cache  add ca-certificates
+RUN apt update && apt install ca-certificates -y
 
-WORKDIR /root/
+WORKDIR /app/bin
 
 # copy over binary build from the first builder stage above into ./
 COPY --from=builder /src/bin/api ./
+
 
 # migration files
 COPY ./db ./

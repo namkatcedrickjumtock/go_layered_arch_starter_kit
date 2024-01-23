@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/Iknite-space/itamba-api/internal/models"
-	"github.com/Iknite-space/itamba-api/internal/persistence"
+	"github.com/namkatcedrickjumtock/go_layered_arch_starter_kit/internal/models"
+	"github.com/namkatcedrickjumtock/go_layered_arch_starter_kit/internal/persistence"
 )
 
 //go:generate mockgen -source ./echo.go -destination mocks/echo.mock.go -package mocks

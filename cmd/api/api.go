@@ -7,11 +7,11 @@ import (
 	"log"
 	"os"
 
-	"github.com/Iknite-space/itamba-api/internal/api"
-	"github.com/Iknite-space/itamba-api/internal/persistence"
-	"github.com/Iknite-space/itamba-api/internal/services/echo"
 	"github.com/ardanlabs/conf/v3"
 	"github.com/joho/godotenv"
+	"github.com/namkatcedrickjumtock/go_layered_arch_starter_kit/internal/api"
+	"github.com/namkatcedrickjumtock/go_layered_arch_starter_kit/internal/persistence"
+	"github.com/namkatcedrickjumtock/go_layered_arch_starter_kit/internal/services/echo"
 )
 
 func main() {

@@ -1,0 +1,26 @@
+name: Publish Build Artifacts
+on:
+  push:
+    tags:
+    - '*'
+    branches:
+    - main
+    - 'release/*'
+
+jobs:
+
+  workflow_cliqet_publish_build_artifacts:
+    uses: Iknite-Space/iknite-reusable-ci-cd/.github/workflows/publish_build_artifacts.yaml@main
+    with:
+      working-directory: cliqets-cd
+      repository: Iknite-Space/cliqets-cd
+      cf_ecr: cf_ecr_repo.yaml 
+      make_file: Makefile
+      email: devopos@cliqets.com
+      uname: Github Actions 
+      
+    secrets:
+      aws-access: ${{secrets.AWS_ACCESS_KEY_ID}}
+      aws-secret: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+      ssh: ${{secrets.CLIQETS_CD_DEPLOY_KEY}}
+      GRPC_CONTRACTS_DEPLOY_KEY: "${{ secrets.GRPC_CONTRACTS_DEPLOY_KEY }}"

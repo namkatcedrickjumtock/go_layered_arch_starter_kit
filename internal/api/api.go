@@ -3,10 +3,10 @@ package api
 import (
 	"net/http"
 
-	"github.com/Iknite-space/itamba-api/internal/models"
-	"github.com/Iknite-space/itamba-api/internal/services/echo"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/namkatcedrickjumtock/go_layered_arch_starter_kit/internal/models"
+	"github.com/namkatcedrickjumtock/go_layered_arch_starter_kit/internal/services/echo"
 )
 
 func NewAPIListener(echoer echo.Echoer) (*gin.Engine, error) {
